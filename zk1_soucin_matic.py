@@ -15,37 +15,55 @@ try:
     #Naplnění matic, resp. seznamy seznamů čísly vč. ošetření, že se jedná o čísla
     matA = []
     matB = []
-  
+    l = []
+    s = str()
     for i in range (len(readerA)):
-        l = []
-        for j in range(len(readerA[i])):
-            if readerA[i][j] == " ":
-                continue
-            elif readerA[i][j] == "\n":
+        for j in range(len(readerA[i])):               
+            if readerA[i][j] != "\n" and readerA[i][j] != " ":      
+                s = s + readerA[i][j]
+            elif readerA[i][j] == " ":
+                try:
+                    l.append(float(s))
+                    s = str()
+                    
+                    continue    
+                except ValueError:
+                    print(readerA[i][j],"Je toto mezera?")
+                    print("Matice A obsahuje i jiné znaky než čísla. Zkontrojulte vstupní soubor.")
+                    exit()
+            elif readerA[i][j] == "\n" :
+                
                 matA.append(l)
                 print("Konec řádku")
                 break
-            else:
-                try:
-                    try:
-                        print(readerA[i][j])
-                        c = readerA[i][j]+readerA[i][j+1]
-                        l.append(float(c))
-                        print("zde je c",c)
-                        j = 
-                    except ValueError:                                               
-                        l.append(float(readerA[i][j]))
-                        print("ahojík")
-                        pass
-                    except IndexError:
-                        pass   
+            
+        
+        
+            
+        """   
+            try:
+                l.append(float(s))
+            except TypeError:
+                print(readerA[i][j],"Je toto mezera?")
+                print("Matice A obsahuje i jiné znaky než čísla. Zkontrojulte vstupní soubor.")
+                exit()
+            s = str()                   
+         """           
+
+            
+
+        
+                    
+                
+                
+                
+            
+           
                        
                        
-                except ValueError:
-                    print(readerA[i][j],"Je toto mezera?")
-                    print("V matici A se na pozici",i+1,"řádku a",int(j/2)+1,"sloupce se nenachází číslo.")
-                    exit()
+                
     matA.append(l)
+    print(l)
     print("konec řádku")
     for i in range (len(readerB)):
         l = []
