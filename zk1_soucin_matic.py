@@ -1,128 +1,100 @@
+#Zadávání počtů řádků a sloupců obou matic
+try:   
+    print("Kolik řádků bude mít první matice?")
+    rad_A = int(input())
+    print("Kolik sloupců bude mít první matice?")
+    slou_A = int(input())
+    print("Kolik řádků bude mít druhá matice?")
+    rad_B = int(input())
+    if slou_A != rad_B:
+        print("Počet sloupců první matice neodpovídá počtu řádků druhé matice.")
+        exit()
+    print("Kolik sloupců bude mít druhá matice?")
+    slou_B = int(input())
+except ValueError:
+    print("Nezadal jste celé číslo.")
+    exit()
 
 
-try:
-    with open ('mat_A.txt', encoding="utf-8") as A,\
-        open ('mat_B.txt', encoding="utf-8") as B,\
-        open ('mat_C',"w", encoding="utf-8") as C:
-        readerA = A.readlines()
-        readerB = B.readlines()
-    print(readerA)
-    print(len(readerA))
-    print(readerB)
-    print(len(readerB))
-
-
-    #Naplnění matic, resp. seznamy seznamů čísly vč. ošetření, že se jedná o čísla
-    matA = []
-    matB = []
+#Zadávání konkrétních hodnot do matic
+matA = []
+matB = []
+for i in range(rad_A):
     l = []
-    s = str()
-    for i in range (len(readerA)):
-        for j in range(len(readerA[i])):               
-            if readerA[i][j] != "\n" and readerA[i][j] != " ":      
-                s = s + readerA[i][j]
-            elif readerA[i][j] == " ":
-                try:
-                    l.append(float(s))
-                    s = str()
-                    
-                    continue    
-                except ValueError:
-                    print(readerA[i][j],"Je toto mezera?")
-                    print("Matice A obsahuje i jiné znaky než čísla. Zkontrojulte vstupní soubor.")
-                    exit()
-            elif readerA[i][j] == "\n" :
-                
-                matA.append(l)
-                print("Konec řádku")
-                break
-            
-        
-        
-            
-        """   
-            try:
-                l.append(float(s))
-            except TypeError:
-                print(readerA[i][j],"Je toto mezera?")
-                print("Matice A obsahuje i jiné znaky než čísla. Zkontrojulte vstupní soubor.")
-                exit()
-            s = str()                   
-         """           
-
-            
-
-        
-                    
-                
-                
-                
-            
-           
-                       
-                       
-                
+    print("Zadejte hodnoty",i+1,"řádku první matice. Po zadání hodnoty stiskněte ENTER")
+    for j in range(slou_A):
+        inp = str(input())
+        ot = 'False'
+        for lom in range(len(inp)):
+            if inp[lom] == '/':
+                x =float(inp[:lom])
+                y = float(inp[(lom+1):])
+                l.append(x/y)
+                ot = 'True'
+        if ot == 'False':
+            l.append(float(inp))
     matA.append(l)
-    print(l)
-    print("konec řádku")
-    for i in range (len(readerB)):
-        l = []
-        for j in range(len(readerB[i])):
-            if readerB[i][j] == " ":
-                continue
-            elif readerB[i][j] == "\n":
-                matB.append(l)
-                break
-            else:
-                try:
-                    l.append(float(readerB[i][j]))
-                except ValueError:
-                    print(readerB[i][j],"Je toto mezera?")
-                    print("V matici B se na pozici",i+1,"řádku a",int(j/2)+1,"sloupce se nenachází číslo.")
-                    exit()
+ot = 'False'
+for i in range(rad_B):
+    l = []
+    print("Zadejte hodnoty",i+1,"řádku druhé matice. Po zadání hodnoty stiskněte ENTER")
+    for j in range(slou_B):
+        inp = str(input())
+        ot = 'False'
+        for lom in range(len(inp)):
+            if inp[lom] == "/":
+                x =float(inp[:lom])
+                y = float(inp[(lom+1):])
+                l.append(x/y)
+                ot = 'True'
+        if ot == 'False':
+            l.append(float(inp))
     matB.append(l)
-
-    print(matA)
-    print(matB)
-    print(len(matA))
-    print(len(matA[0]))
+print(matA,"Matice A")
+print(matB,"Matice B")
 
 
-    #Ošetření obdélníkovosti matic
-    i = 0
-    for i in range(len(matA[i])):
-        if len(matA[0]) != len(matA[i]):
-            print("Matice A není obdelníková")
-            exit()
-    for i in range(len(matB[i])):
-        if len(matB[0]) != len(matB[i]):
-            print("Matice B není obdelníková")
-            exit()
-    print("Ahoj")
+#Výpočet hodnot matice součinu umístěných do jednoho seznamu
+matC = []
+o = []
+c = 0
+j = 0
+k = 0
+for _ in range (slou_B):
+    p = []
+    c = 0    
+    for i in range(rad_B):
+        #try:
+            p.append(matB[i][j])
+        #except IndexError:
+            #pass
+    for _ in range (rad_A):
+        c = 0
+        for i in range(rad_B):
+            #try:
+                c += (matA[_][i] * p[i])
+                print(matA[_][i],p[i],c)    
+            #except IndexError:
+                #pass
+        o.append(c)   
+    j += 1
 
-    #Výpočet matice C
-    matC = []
-    i = 0
-    
-    soucet = 0
-    for i in range(len(matA[i])):
-        print(i,"vnější")
-        j = 0
-        for i in range(len(matB[i])):    
-            print(j)
-            l = []
-            
-    
-            soucet += (matA[i][j]*matB[i][j])
-            print(matA[i][j],matB[j][i],"sou",soucet)
-            j += 1
-            l.append(soucet)
-        soucet = 0
-        matC.append(l)
-    
+#Přeindexování seznamu hodnot matice součinu, tak aby odpovídala její struktuře řádků a sloupců
+citac = 0
+for _ in range(rad_A):
+    q = []
+    for x in range(len(o)):
+        if x%(rad_A) == citac:
+            q.append(o[x])
+    citac += 1
+    matC.append(q)
 
-    print(matC)
+#Vytisknutí matice
 
-except IOError:
-    print("Chyba při načtení souboru.")
-    
+print("ODTUD UŽ TISKNEME NAOSTRO!")
+for i in range(len(matC)):
+    print("[",end = "")
+    for j in range(len(matC[i])-1):
+        print(matC[i][j]," ",end = "")
+    print(matC[i][-1],end = "")
+    print("]")
